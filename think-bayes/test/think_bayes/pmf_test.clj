@@ -11,7 +11,8 @@
     (let [single-item (set-mass {} 1 (/ 1 6))]
       (is (= {1 (/ 1 6) 2 (/ 1 3)}
              (set-mass single-item 2 (/ 1 3))))
-      (is (= 1 (probability single-item 1)))))
+      (is (= 1 (probability single-item 1)))
+      (is (= (/ 1 3) (get-mass (multiply-mass single-item 1 2) 1)))))
   (testing "Many items PMF"
     (let [values (range 1 (inc 6))
           masses (map #(/ 1 %) values)
@@ -21,7 +22,9 @@
       (let [total-mass (reduce + masses)]
         (is (= (set (map #(/ % total-mass) masses))
                (set (map #(probability many-items-pmf %)
-                         (keys many-items-pmf))))))))
+                         (keys many-items-pmf))))))
+      (is (= (/ 3 4)
+             (get-mass (multiply-mass many-items-pmf 4 3) 4)))))
   (testing "increment-mass"
     (is (= {"the" 2 "quick" 1 "little" 1 "brown" 1 "fox" 1
             "jumped" 1 "over" 1 "lazy" 1 "grey" 1 "lambs" 1}
