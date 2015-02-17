@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="ReplState" timestamp="1424163354555">{:repl-history {:ide [], :local [&quot;(reduce + (map (/ 1 %) (range 1 7)))&quot; &quot;nREPL server started on port 53873 on host 127.0.0.1\n(reduce + #(map (/ 1 %) (range 1 7)))&quot; &quot;(reduce + #(map (/ 1 %) (range 1 7)))&quot; &quot;(reduce + (map #(/ 1 %) (range 1 7)))&quot;], :remote []}}</component>
+  <component name="ReplState" timestamp="1424164194709">{:repl-history {:ide [], :local [&quot;(reduce + (map (/ 1 %) (range 1 7)))&quot; &quot;nREPL server started on port 53873 on host 127.0.0.1\n(reduce + #(map (/ 1 %) (range 1 7)))&quot; &quot;(reduce + #(map (/ 1 %) (range 1 7)))&quot; &quot;(reduce + (map #(/ 1 %) (range 1 7)))&quot;], :remote []}}</component>
 </project>

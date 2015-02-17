@@ -31,3 +31,13 @@
            (reduce #(increment-mass %1 %2) {}
                    (string/split "the quick little brown fox jumped over the lazy grey lambs"
                           #"\s+"))))))
+
+(deftest cookie-test
+  (let [prior-pmf {"Bowl 1" (/ 1 2)
+                   "Bowl 2" (/ 1 2)}
+        posterior-pmf (-> prior-pmf
+                           (multiply-mass "Bowl 1" (/ 3 4))
+                           (multiply-mass "Bowl 2" (/ 1 2)))]
+    (testing "Posterior PMF"
+      (is (= (/ 6 10) (probability posterior-pmf "Bowl 1")))
+      (is (= (/ 2 5) (probability posterior-pmf "Bowl 2"))))))
