@@ -1,4 +1,23 @@
-Leiningen.gitignore
+# Leiningen.gitignore
+# I'm uncertain how to "include" this file so I'm hard-coding values.
+target
+classes
+checkouts
+pom.xml
+pom.xml.asc
+*.jar
+*.class
+.lein-*
+.nrepl-port
+.repl
+
+# IntelliJ user files
+**/.idea/tasks.xml
+**/.idea/workspace.xml
+
+# Backup files
+*~
+
 # =========================
 # Operating System Files
 # =========================
