@@ -1,4 +1,4 @@
-(ns think-bayes.pmf-test
+(ns think-bayes.pmf-tests
   (:require (clojure [string :as string]
                      [test :refer :all])
             [think-bayes.pmf :refer :all]))

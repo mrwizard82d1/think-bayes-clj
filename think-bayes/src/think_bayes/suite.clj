@@ -1,4 +1,4 @@
-(ns think-bayes.cookie
+(ns think-bayes.suite
   (:require [think-bayes.pmf :as pmf]))
 
 
@@ -7,16 +7,6 @@
   ([] {})
   ([hypotheses]
    (reduce #(pmf/set-mass %1 %2 1) {} hypotheses)))
-
-#_(defn update-hypothesis-mass
-  [to-update-pmf hypothesis data]
-  (pmf/multiply-mass to-update-pmf hypothesis
-                     (likelihood data hypothesis)))
-
-#_(defn update
-  "Update the prior probabilities based on data and likelihood."
-  [prior data likelihood]
-    (reduce #(%1 %2 data) prior (keys prior)))
 
 (defn update-hypothesis-mass
   "Update the probability mass of a single hypothesis."

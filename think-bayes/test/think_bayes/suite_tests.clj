@@ -1,9 +1,9 @@
-(ns think-bayes.cookie-test
+(ns think-bayes.suite-tests
   (:require (clojure [test :refer :all])
-            [think-bayes.cookie :as cookie]
+            [think-bayes.suite :as cookie]
             [think-bayes.pmf :as pmf]))
 
-(deftest cookie-test
+(deftest update-tests
   (testing "No hypotheses"
     (let [no-hypothesis-cookie (cookie/init)]
       (testing "Empty PMF"
@@ -29,16 +29,4 @@
                  (cookie/update many-hypotheses-cookie
                                 3
                                 (fn [_d _h] 1/6))
-                 3))))))
-  (testing "Cookie problem"
-    (let [hypotheses ["Bowl 1" "Bowl 2"]
-          cookie-pmf (cookie/init hypotheses)
-          mixes {"Bowl 1" {:vanilla 3/4, :chocolate 1/4},
-                 "Bowl 2" {:vanilla 1/2, :chocolate 1/2}}
-          likelihood (fn [d h] (-> mixes (get h) (get d)))]
-      (testing "Update after seeing :vanilla"
-        (let [updated-pmf
-              (cookie/update cookie-pmf :vanilla likelihood)]
-          (is (= #{3/5 2/5}
-                 (set (map #(pmf/probability updated-pmf %)
-                            (keys updated-pmf))))))))))
+                 3)))))))
