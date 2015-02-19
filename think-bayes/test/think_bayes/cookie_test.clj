@@ -29,4 +29,16 @@
                  (cookie/update many-hypotheses-cookie
                                 3
                                 (fn [_d _h] 1/6))
-                 3)))))))
+                 3))))))
+  (testing "Cookie problem"
+    (let [hypotheses ["Bowl 1" "Bowl 2"]
+          cookie-pmf (cookie/init hypotheses)
+          mixes {"Bowl 1" {:vanilla 3/4, :chocolate 1/4},
+                 "Bowl 2" {:vanilla 1/2, :chocolate 1/2}}
+          likelihood (fn [d h] (-> mixes (get h) (get d)))]
+      (testing "Update after seeing :vanilla"
+        (let [updated-pmf
+              (cookie/update cookie-pmf :vanilla likelihood)]
+          (is (= #{3/5 2/5}
+                 (set (map #(pmf/probability updated-pmf %)
+                            (keys updated-pmf))))))))))
