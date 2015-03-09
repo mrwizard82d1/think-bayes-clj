@@ -1,4 +1,4 @@
-# think_bayes_clj
+# think-bayes-clj
 
 Code from the book "Think Bayes" - only in Clojure!
 
