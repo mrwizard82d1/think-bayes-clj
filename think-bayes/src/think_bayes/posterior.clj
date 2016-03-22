@@ -22,13 +22,8 @@
         hypothesis (keys (likelihood datum))]
     [datum hypothesis]))
 
-(defn likelihood-item [datum-hypothesis-pair prior likelihood]
-  "Calculate the item in a likelihood map for a datum-hypothesis-pair."
-  {(first datum-hypothesis-pair) 
-   {(second datum-hypothesis-pair) (posterior (first datum-hypothesis-pair) 
-                                              (second datum-hypothesis-pair) prior likelihood)}})
-
 (defn posterior-distribution [prior likelihood]
-  (reduce #(merge %1 (likelihood-item %2 prior likelihood)) {} (datum-hypothesis-pairs likelihood)))
+  (reduce #(assoc-in %1 %2 (posterior (first %2) (second %2) prior likelihood)) {} (datum-hypothesis-pairs likelihood)))
+
 
 
