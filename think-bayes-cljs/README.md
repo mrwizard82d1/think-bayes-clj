@@ -1,6 +1,6 @@
 # think-bayes
 
-FIXME: Write a one-line description of your library/project.
+Code from the book, "Think Bayes," in ClojureScript.
 
 ## Overview
 
