@@ -6,4 +6,7 @@
 
 (enable-console-print!)
 
-(println "Hello world!")
+(defn -main []
+  (println "Hello world!"))
+
+(set! *main-cli-fn* -main)

@@ -1,6 +1,7 @@
 # Leiningen.gitignore
 # I'm uncertain how to "include" this file so I'm hard-coding values.
 target
+out
 classes
 checkouts
 pom.xml
