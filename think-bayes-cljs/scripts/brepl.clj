@@ -4,8 +4,8 @@
   '[cljs.repl.browser :as browser])
 
 (b/build "src"
-  {:main 'think-bayes.core
-   :output-to "out/think_bayes.js"
+  {:main 'test-utils/.core
+   :output-to "out/test_utils/.js"
    :output-dir "out"
    :verbose true})
 
