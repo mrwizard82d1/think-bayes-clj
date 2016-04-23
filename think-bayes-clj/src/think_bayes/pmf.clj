@@ -4,6 +4,7 @@
 (defn mass
   "Returns the mass of the value, v, in a PMF. If no such value exists, returns 0."
   [pmf v]
+  {:pre [(not (nil? pmf))]}
   (pmf v 0))
 
 
@@ -12,6 +13,7 @@
 
   Remember that after applying f, the PMF will **not** be normalized."
   [pmf v f]
+  {:pre [(not (nil? pmf))]}
   (assoc pmf v (f (mass pmf v))))
 
 
