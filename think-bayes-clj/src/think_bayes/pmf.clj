@@ -1,17 +1,28 @@
 (ns think-bayes.pmf)
 
-(defn set-mass [pmf value mass]
-  (assoc pmf value mass))
 
-(defn get-mass [pmf value]
-  (get pmf value))
+(defn mass
+  "Returns the mass of the value, v, in a PMF. If no such value exists, returns 0."
+  [pmf v]
+  (pmf v 0))
 
-(defn increment-mass [pmf value]
-  (assoc pmf value (inc (get pmf value 0))))
 
-(defn probability [pmf value]
-  (/ (get-mass pmf value)
-     (apply + (vals pmf))))
+(defn transform
+  "Returns a new PMF by replacing the mass of value, v, with the result of applying a transformation function, f, to that mass.
 
-(defn multiply-mass [pmf value factor]
-  (assoc pmf value (* factor (get-mass pmf value))))
+  Remember that after applying f, the PMF will **not** be normalized."
+  [pmf v f]
+  (assoc pmf v (f (mass pmf v))))
+
+
+(defn make
+  "Makes a probability mass function (PMF) from a sequence of values, vs.
+
+  A probability mass function is a mapping between values and probabilities, frequencies, or 'weights.' (See 
+  https://en.wikipedia.org/wiki/Probability_mass_function for more details.)
+
+  In this implementation, a PMF only maps to probabilities after being normalized. Prior to normalization (or after 
+  change that denormalize the probabilities), the masses corresponding to the values are more like frequencies or 
+  weights."
+  [vs]
+  (reduce #(transform %1 %2 inc) {} vs))
