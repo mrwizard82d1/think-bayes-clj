@@ -5,16 +5,26 @@
   "Returns the mass of the value, v, in a PMF. If no such value exists, returns 0."
   [pmf v]
   {:pre [(not (nil? pmf))]}
-  (pmf v 0))
+  (pmf v))
 
 
-(defn transform
-  "Returns a new PMF by replacing the mass of value, v, with the result of applying a transformation function, f, to that mass.
+(def change-mass "Returns a new PMF by replacing the mass of value, v, with to." assoc)
 
-  Remember that after applying f, the PMF will **not** be normalized."
-  [pmf v f]
+
+(defn change-mass-by
+  "Returns a new PMF with the mass of the value, v, transformed by the function by.
+
+  In general, invoking this function denormalizes the masses (probabilities)." 
+  [pmf v by]
   {:pre [(not (nil? pmf))]}
-  (assoc pmf v (f (mass pmf v))))
+  (assoc pmf v (by (mass pmf v))))
+
+
+(defn scale-mass
+  "Returns a new PMF with the mass of the value, v, multiplied by the factor, by."
+  [pmf v by]
+  {:pre [(not (nil? pmf))]}
+  (assoc pmf v (* (mass pmf v) by)))
 
 
 (defn make
@@ -27,7 +37,8 @@
   change that denormalize the probabilities), the masses corresponding to the values are more like frequencies or 
   weights."
   [vs]
-  (reduce #(transform %1 %2 inc) {} vs))
+  (reduce #(assoc %1 %2 (inc (%1 %2 0))) {} vs))
+
 
 (defn normalize
   "Normalize the PMF."
