@@ -1,6 +1,6 @@
 (ns think-bayes.core-test
-  (:require [clojure.test :as t]
-            think-bayes.pmf-test))
+  (:require [clojure.test :as t]))
 
-(t/run-tests 'think-bayes.pmf-test)
-n
+(t/run-tests 'think-bayes.pmf-test
+             'think-bayes.table-test)
+
