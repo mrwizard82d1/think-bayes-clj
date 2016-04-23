@@ -28,3 +28,14 @@
   weights."
   [vs]
   (reduce #(transform %1 %2 inc) {} vs))
+
+(defn normalize
+  "Normalize the PMF."
+  [pmf]
+  {:pre [(not (nil? pmf))
+         (not (empty? pmf))]}
+  (let [total (reduce + (vals pmf))]
+    (reduce (fn [pmf [v p]]
+              (assoc pmf v (/ p total)))
+            {}
+            pmf)))

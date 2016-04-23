@@ -31,3 +31,11 @@
     1 :glabra #(/ % 5)
     (Math/sqrt 2) :senis #(Math/sqrt %))
   (t/is (= 1 (pmf/mass (pmf/transform {} :glabra inc) :glabra))))
+
+(t/deftest normalize-test
+  (t/is (= 1 (pmf/mass (pmf/normalize {:a 5}) :a)))
+  (t/is (= {:glabra (/ 5 11)
+            :recidiva (/ 3 11)
+            :senis (/ 2 11)
+            :retis (/ 1 11)}
+           (pmf/normalize many-pmf))))
