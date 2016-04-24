@@ -57,4 +57,7 @@
 (t/deftest primitive-cookie-test
   (let [cookie-pmf (-> {"Bowl 1" (/ 1 2)
                         "Bowl 2" (/ 1 2)}
-                       )]))
+                       (pmf/scale-mass "Bowl 1" (/ 3 4))
+                       (pmf/scale-mass "Bowl 2" (/ 1 2))
+                       pmf/normalize)]
+    (t/is (= (/ 3 5) (pmf/probability cookie-pmf"Bowl 1")))))

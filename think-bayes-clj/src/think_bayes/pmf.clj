@@ -8,6 +8,12 @@
   (pmf v))
 
 
+(def probability
+  "Returns the probability (mass) of the value, v.
+
+  If the PMF has not been normalized, the value returned may not actually be a probability."
+  mass)
+
 (def change-mass "Returns a new PMF by replacing the mass of value, v, with to." assoc)
 
 
