@@ -9,17 +9,15 @@
       pmf/normalize))
 
 
-(def mix {"Bowl 1" {:vanilla (/ 3 4)
-                    :chocolate (/ 1 2)}
-          "Bowl 2" {:vanilla (/ 1 2)
-                    :chocolate (/ 1 2)}})
-
-
 (defn likelihood [d h]
-  (get-in mix [h d]))
+  (let [mix {"Bowl 1" {:vanilla (/ 3 4)
+                       :chocolate (/ 1 4)}
+             "Bowl 2" {:vanilla (/ 1 2)
+                       :chocolate (/ 1 2)}}]
+    (get-in mix [h d])))
 
 
-(defn posterior [pmf data]
+(defn posterior [pmf data likelihood]
   (pmf/normalize  (reduce #(->> (likelihood data %2)
                                 (pmf/scale-mass %1 %2))
                           pmf
