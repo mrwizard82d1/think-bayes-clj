@@ -49,23 +49,10 @@
         m-and-ms-likelihood (fn [d h] 
                               (* (get-in mixes [(first h) (first d)] 0)
                                  (get-in mixes [(second h) (second d)] 0)))]
-    (t/is (= {[1994 1996] (/ 20 27)
-              [1996 1994] (/ 7 27)}
-             (suite/posterior m-and-ms-suite 
-                              [:yellow :green] 
-                              m-and-ms-likelihood)))
-    (t/is (= {[1994 1996] 1
-              [1996 1994] 0}
-             (suite/posterior m-and-ms-suite 
-                              [:tan :green] 
-                              m-and-ms-likelihood)))
-    (t/is (= {[1994 1996] 0
-              [1996 1994] 1}
-             (suite/posterior m-and-ms-suite 
-                              [:green :tan] 
-                              m-and-ms-likelihood)))
-    (t/is (= {[1994 1996] (/ 1 2)
-              [1996 1994] (/ 1 2)}
-             (suite/posterior m-and-ms-suite 
-                              [:yellow :yellow] 
-                              m-and-ms-likelihood)))))
+    (t/are [e d] (= e (suite/posterior m-and-ms-suite 
+                                       d
+                                       m-and-ms-likelihood))
+           {[1994 1996] (/ 20 27) [1996 1994] (/ 7 27)} [:yellow :green]
+           {[1994 1996] 1 [1996 1994] 0} [:tan :green]
+           {[1994 1996] 0 [1996 1994] 1} [:green :tan]
+           {[1994 1996] (/ 1 2) [1996 1994] (/ 1 2)} [:yellow :yellow])))
