@@ -14,3 +14,27 @@
         ;; because it has no probabilities for chocolate cookies.
         probability-table (core/posterior hypotheses :vanilla p-hypotheses p-data-given-hypothesis)]
     (probability-table :bowl1)))
+
+(defn probability-yellow-1994
+  "Calculate the probability that the yellow M&M was from bag 1 and the green M&M was from bag 2."
+  []
+  (let [hypotheses [[:1994 :1996] [:1996 :1994]]
+        p-hypotheses (reduce #(assoc %1 %2 (/ 1 2)) {} hypotheses)
+        mnm-colors-by-years {:1994 {:brown 30 
+                                    :yellow 20
+                                    :red 20
+                                    :green 10
+                                    :orange 10
+                                    :tan 10}
+                             :1996 {:blue 24
+                                    :green 20
+                                    :orange 16
+                                    :yellow 14
+                                    :red 13
+                                    :brown 13}}
+        p-data-given-hypothesis (fn [[datum hypothesis]]
+                                  (let [first (get-in mnm-colors-by-years (vec (first (map vector hypothesis datum))))
+                                        second (get-in mnm-colors-by-years (vec (last (map vector hypothesis datum))))]
+                                    (* first second)))
+        posteriors (core/posterior hypotheses [:yellow :green] p-hypotheses p-data-given-hypothesis)]
+    (posteriors [:1994 :1996])))
