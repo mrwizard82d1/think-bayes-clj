@@ -1,4 +1,4 @@
-(ns think-bayes-clj.core-test
+(ns think-bayes.core-test
   (:require [clojure.test :refer :all]
             [think-bayes-clj.core :refer :all]))
 

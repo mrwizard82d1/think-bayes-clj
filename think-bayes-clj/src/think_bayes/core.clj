@@ -1,4 +1,4 @@
-(ns think-bayes-clj.core)
+(ns think-bayes.core)
 
 (defn foo
   "I don't do a whole lot."
