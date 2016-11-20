@@ -1,7 +1,8 @@
 (ns think-bayes.core-test
   (:require [clojure.test :refer :all]
-            [think-bayes-clj.core :refer :all]))
+            [think-bayes.core :refer :all]))
 
-(deftest a-test
-  (testing "FIXME, I fail."
-    (is (= 0 1))))
+(deftest bayes-law-test
+  (testing "Verify implementation of Bayes' law"
+    (is (= (/ 3 5) (bayes-law (/ 1 2) (/ 3 4) (/ 5 8))))))
+ 
