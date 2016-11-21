@@ -4,7 +4,7 @@
   (/ (* prior likelihood)
      normalizing-constant))
 
-(defn posterior
+(defn posteriors
   "Calculate the posterior distribution (probability mass function) using Bayes law.
 
    To construct this distribution, we need a sequence of `hypotheses`, the observed datum (called **data** based on colloquial
@@ -16,5 +16,5 @@
                                    (* (priors hypothesis) (likelihoods [observed-data hypothesis])))
         prior-likelihood-products (map #(prior-likelihood-product observed-data %1) hypotheses)
         normalizing-constant (reduce + prior-likelihood-products)
-        posteriors (map #(/ %1 normalizing-constant) prior-likelihood-products)]
-    (zipmap hypotheses posteriors)))
+        posterior-probabilities (map #(/ %1 normalizing-constant) prior-likelihood-products)]
+    (zipmap hypotheses posterior-probabilities)))

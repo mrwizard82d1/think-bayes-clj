@@ -17,7 +17,7 @@
                                          (= (first datum) :open-b)) 0
                                     (and (= hypothesis :car-behind-c)
                                          (= (first datum) :open-b)) 1))
-        posteriors (core/posterior hypotheses [:open-b :no-car] p-hypothesis p-data-given-hypothesis)]
+        posteriors (core/posteriors hypotheses [:open-b :no-car] p-hypothesis p-data-given-hypothesis)]
     (posteriors :car-behind-c)))
 
 (defn should-switch-if-monty-always-picks-b
@@ -36,5 +36,5 @@
                                          (= (first datum) :open-b)) 0
                                     (and (= hypothesis :car-behind-c)
                                          (= (first datum) :open-b)) 1))
-        posteriors (core/posterior hypotheses [:open-b :no-car] p-hypothesis p-data-given-hypothesis)]
+        posteriors (core/posteriors hypotheses [:open-b :no-car] p-hypothesis p-data-given-hypothesis)]
     (posteriors :car-behind-c)))

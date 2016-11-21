@@ -14,8 +14,8 @@
                        [:vanilla :bowl2] (/ 1 2)
                        [:chocolate :bowl1] (/ 1 4)
                        [:chocolate :bowl2] (/ 1 2)}]
-      (is (= (/ 3 5) ((posterior hypotheses :vanilla priors likelihoods) :bowl1)))
-      (is (= (/ 2 5) ((posterior hypotheses :vanilla priors likelihoods) :bowl2)))
-      (is (= (/ 1 3) ((posterior hypotheses :chocolate priors likelihoods) :bowl1)))
-      (is (= (/ 2 3) ((posterior hypotheses :chocolate priors likelihoods) :bowl2))))))
+      (is (= (/ 3 5) ((posteriors hypotheses :vanilla priors likelihoods) :bowl1)))
+      (is (= (/ 2 5) ((posteriors hypotheses :vanilla priors likelihoods) :bowl2)))
+      (is (= (/ 1 3) ((posteriors hypotheses :chocolate priors likelihoods) :bowl1)))
+      (is (= (/ 2 3) ((posteriors hypotheses :chocolate priors likelihoods) :bowl2))))))
  

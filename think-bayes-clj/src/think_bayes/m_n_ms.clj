@@ -12,7 +12,7 @@
                                  [:vanilla :bowl2] (/ 1 2)}
         ;; Similarly, a function for calculating the probability of the data given a hypothesis. Note that this function is incomplete
         ;; because it has no probabilities for chocolate cookies.
-        probability-table (core/posterior hypotheses :vanilla p-hypotheses p-data-given-hypothesis)]
+        probability-table (core/posteriors hypotheses :vanilla p-hypotheses p-data-given-hypothesis)]
     (probability-table :bowl1)))
 
 (defn probability-yellow-1994
@@ -33,8 +33,8 @@
                                     :red 13
                                     :brown 13}}
         p-data-given-hypothesis (fn [[datum hypothesis]]
-                                  (let [first (get-in mnm-colors-by-years (vec (first (map vector hypothesis datum))))
-                                        second (get-in mnm-colors-by-years (vec (last (map vector hypothesis datum))))]
-                                    (* first second)))
-        posteriors (core/posterior hypotheses [:yellow :green] p-hypotheses p-data-given-hypothesis)]
+                                  (let [p-color-in-bag-1 (get-in mnm-colors-by-years (vec (first (map vector hypothesis datum))))
+                                        p-color-in-bag-2 (get-in mnm-colors-by-years (vec (last (map vector hypothesis datum))))]
+                                    (* p-color-in-bag-1 p-color-in-bag-2)))
+        posteriors (core/posteriors hypotheses [:yellow :green] p-hypotheses p-data-given-hypothesis)]
     (posteriors [:1994 :1996])))
