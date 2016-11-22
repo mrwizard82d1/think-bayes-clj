@@ -21,3 +21,8 @@
         reduce-f (fn [m [k v]]
                    (assoc m k (/ v normalizing-factor)))]
     (reduce reduce-f {} pmf)))
+
+(defn scale
+  "Multiple the 'probability' (mass) for `hypothesis` by `factor`."
+  [pmf hypothesis factor]
+  (set-probability pmf hypothesis (* (probability pmf hypothesis) factor)))

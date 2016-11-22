@@ -10,7 +10,8 @@
   (testing "Of PMF with single existing key"
     (let [pmf-with-key (-> {} (sut/set-probability :a-key 4))]
       (is (= 5 (sut/probability (sut/set-probability pmf-with-key :a-key 5) :a-key)))
-      (is (= 1 (sut/probability (sut/normalize pmf-with-key) :a-key)))))
+      (is (= 1 (sut/probability (sut/normalize pmf-with-key) :a-key)))
+      (is (= 24 (sut/probability (sut/scale pmf-with-key :a-key 6) :a-key)))))
   (testing "Of PMF with many existing key"
     (let [pmf-with-keys (-> {} 
                             (sut/set-probability :a-key 4)
