@@ -1,4 +1,5 @@
-(ns think-bayes.pmf)
+(ns think-bayes.pmf
+  (:refer-clojure :rename {inc core-incs}))
 
 (defn probability [pmf k]
   (pmf k))
@@ -12,3 +13,11 @@
    (inc pmf hypothesis 1))
   ([pmf hypothesis by-amount]
    (set-probability pmf hypothesis (+ (get pmf hypothesis 0) by-amount))))
+
+(defn normalize
+  "Normalize the 'probability' masses of `pmf` so they are probabilities (sum to 1)."
+  [pmf]
+  (let [normalizing-factor (reduce + (vals pmf))
+        reduce-f (fn [m [k v]]
+                   (assoc m k (/ v normalizing-factor)))]
+    (reduce reduce-f {} pmf)))
