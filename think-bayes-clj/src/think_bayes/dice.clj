@@ -18,3 +18,8 @@
   [priors spots]
   (suite/posteriors priors spots likelihood))
 
+(defn posteriors-seq
+  "Calculate the sequence of posteriors staring with `priors` based on the observed `data` sequence."
+  [priors data]
+  (suite/posteriors-seq priors data likelihood))
+
