@@ -1,13 +1,8 @@
 (ns think-bayes.dice-test
   (:require [think-bayes.dice :as sut]
             [clojure.test :as t]
-            [think-bayes.pmf :as pmf]))
-
-;; The following definition is from "The Clojure Cookbook" (http://gettingclojure.wikidot.com/cookbook:numbers).
-(defn float= [x y]
-  (let [epsilon 0.000000000001
-        scale (if (or (zero? x) (zero? y)) 1 (Math/abs x))]
-    (<= (Math/abs (- x y)) (* scale epsilon))))
+            [think-bayes.pmf :as pmf]
+            [think-bayes.test-helpers :as th]))
 
 (t/deftest dice-test
   (t/testing "dice/likelihood tests"
@@ -34,4 +29,4 @@
                      20 (/ 2 17)}] (nth actual-seq 1)))
         (let [actual-values [0.0 0.0 0.943248453672 0.0552061280613 0.0015454182665]
               expect-values (vals (second actual-seq))]
-          (map #(t/is (float= %1 %2)) actual-values expect-values))))))
+          (map #(t/is (th/float= %1 %2 0.000000000001)) actual-values expect-values))))))
