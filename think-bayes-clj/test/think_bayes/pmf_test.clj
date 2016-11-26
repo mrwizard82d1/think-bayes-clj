@@ -19,4 +19,13 @@
                             (sut/set-probability :c-key 2))]
       (is (= (/ 4 15) (sut/probability (sut/normalize pmf-with-keys) :a-key)))
       (is (= (/ 9 15) (sut/probability (sut/normalize pmf-with-keys) :b-key)))
-      (is (= (/ 2 15) (sut/probability (sut/normalize pmf-with-keys) :c-key))))))
+      (is (= (/ 2 15) (sut/probability (sut/normalize pmf-with-keys) :c-key)))))
+  (testing "Of `sut.mean`"
+    (let [sut-with-single-key (sut/inc {} 44)
+          sut-with-many-keys (-> {}
+                                 (sut/set-probability 4 (/ 1 3))
+                                 (sut/set-probability 9 (/ 1 3))
+                                 (sut/set-probability 2 (/ 1 3))
+                                 (sut/normalize))]
+      (is (= 44 (sut/mean sut-with-single-key)))
+      (is (= 5 (sut/mean sut-with-many-keys))))))

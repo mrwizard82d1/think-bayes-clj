@@ -26,3 +26,10 @@
   "Multiple the 'probability' (mass) for `hypothesis` by `factor`."
   [pmf hypothesis factor]
   (set-probability pmf hypothesis (* (probability pmf hypothesis) factor)))
+
+(defn mean
+  "Calculate the weighted arithmetic mean of the hypotheses of a PMF.
+
+  Remember that this function **assumes** all hypotheses are numbers."
+  [pmf]
+  (reduce #(+ %1 (* (first %2) (second %2))) 0 pmf))
