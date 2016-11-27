@@ -1,11 +1,13 @@
 (ns think-bayes.pmf
   (:refer-clojure :rename {inc core-incs}))
 
-(defn probability [pmf k]
-  (pmf k))
+(defn probability [pmf probability]
+  (pmf probability))
 
-(defn set-probability [pmf k v]
-  (assoc pmf k v))
+(defn set-probability 
+  "Sets the probability of `hypothesis` in `pmf` to be `probability`."
+  [pmf hypothesis probability]
+  (assoc pmf hypothesis probability))
 
 (defn inc 
   "Increment the 'probabilty' (mass) for `hypothesis` `by-amount` (optional - default value 1)."
