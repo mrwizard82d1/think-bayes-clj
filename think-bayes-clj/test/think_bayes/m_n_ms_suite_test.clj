@@ -5,14 +5,15 @@
 
 (t/deftest m-n-ms-suite-test
   (t/testing "m-n-ms-suite/likelihood"
-    (t/is (= 20 (sut/likelihood [:bag-1 :yellow] sut/hypothesis-a)))
-    (t/is (= 14 (sut/likelihood [:bag-2 :yellow] sut/hypothesis-a)))
-    (t/is (= 10 (sut/likelihood [:bag-1 :tan] sut/hypothesis-a)))
-    (t/is (= nil (sut/likelihood [:bag-2 :tan] sut/hypothesis-a)))
-    (t/is (= 14 (sut/likelihood [:bag-1 :yellow] sut/hypothesis-b)))
-    (t/is (= 20 (sut/likelihood [:bag-2 :yellow] sut/hypothesis-b)))
-    (t/is (= nil (sut/likelihood [:bag-1 :tan] sut/hypothesis-b)))
-    (t/is (= 10 (sut/likelihood [:bag-2 :tan] sut/hypothesis-b))))
+    (t/are [x y z w] (= (sut/likelihood [y z] w))
+      20 :bag-1 :yellow sut/hypothesis-a
+      14 :bag-2 :yellow sut/hypothesis-a
+      10 :bag-1 :tan sut/hypothesis-a
+      nil :bag-2 :tan sut/hypothesis-a
+      14 :bag-1 :yellow sut/hypothesis-b
+      20 :bag-2 :yellow sut/hypothesis-b
+      nil :bag-1 :tan sut/hypothesis-b
+      10 :bag-2 :tan sut/hypothesis-b))
   (t/testing "m-n-ms-suite/posterior when selected 'yellow' and 'green': one from each bag."
     (let [priors (sut/priors)
           posteriors (-> priors

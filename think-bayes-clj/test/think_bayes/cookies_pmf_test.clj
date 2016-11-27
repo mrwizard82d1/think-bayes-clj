@@ -11,10 +11,11 @@
       (t/is (= (repeat 3 (/ 1 3))
                (map #(pmf/probability priors %1) hypotheses)))))
   (t/testing "cookies-pmf/likelihood"
-    (t/is (= (/ 3 4) (sut/likelihood :vanilla :bowl-1)))
-    (t/is (= (/ 1 4) (sut/likelihood :chocolate :bowl-1)))
-    (t/is (= (/ 1 2) (sut/likelihood :vanilla :bowl-2)))
-    (t/is (= (/ 1 2) (sut/likelihood :chocolate :bowl-2))))
+    (t/are [x y z] (= x (sut/likelihood y z))
+      (/ 3 4) :vanilla :bowl-1
+      (/ 1 4) :chocolate :bowl-1
+      (/ 1 2) :vanilla :bowl-2
+      (/ 1 2) :chocolate :bowl-2))
   (t/testing "cookies-pmf/posteriors"
     (let [hypotheses [:bowl-1 :bowl-2]
           priors (sut/priors hypotheses)]

@@ -21,14 +21,16 @@
               priors-2000 (sut/uniform-priors 1 2000)
               posteriors-2000 (sut/posteriors priors-2000 60)]
           (t/testing "sut.mean"
-            (t/is (= 333 (int (Math/rint (pmf/mean posteriors-1000)))))
-            (t/is (= 207 (int (Math/rint (pmf/mean posteriors-500)))))
-            (t/is (= 552 (int (Math/rint (pmf/mean posteriors-2000))))))
+            (t/are [x y] (= x (int (Math/rint (pmf/mean y))))
+              333 posteriors-1000
+              207 posteriors-500
+              552 posteriors-2000))
           (let [data-seq [60, 30, 90]
                 posteriors-seq-500 (suite/posteriors-seq priors-500 data-seq sut/likelihood)
                 posteriors-seq-1000 (suite/posteriors-seq priors-1000 data-seq sut/likelihood)
                 posteriors-seq-2000 (suite/posteriors-seq priors-2000 data-seq sut/likelihood)]
             (t/testing "closer means with more observations"
-              (t/is (= 152 (int (Math/rint (pmf/mean (second (last posteriors-seq-500)))))))
-              (t/is (= 164 (int (Math/rint (pmf/mean (second (last posteriors-seq-1000)))))))
-              (t/is (= 171 (int (Math/rint (pmf/mean (second (last posteriors-seq-2000))))))))))))))
+              (t/are [x y] (= x (int (Math/rint (pmf/mean (second (last y))))))
+                152 posteriors-seq-500
+                164 posteriors-seq-1000
+                171 posteriors-seq-2000))))))))

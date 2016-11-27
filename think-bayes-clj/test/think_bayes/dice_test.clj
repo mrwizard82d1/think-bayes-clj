@@ -15,11 +15,12 @@
                (map #(pmf/probability priors %1) hypotheses))))
     (t/testing "dice/posteriors"
       (let [posteriors (sut/posteriors priors 6)]
-        (t/is (= 0 (pmf/probability posteriors 4)))
-        (t/is (= (/ 20 51) (pmf/probability posteriors 6)))
-        (t/is (= (/ 5 17) (pmf/probability posteriors 8)))
-        (t/is (= (/ 10 51) (pmf/probability posteriors 12)))
-        (t/is (= (/ 2 17) (pmf/probability posteriors 20)))))
+        (t/are [x y] (= x (pmf/probability posteriors y))
+          0 4
+          (/ 20 51) 6
+          (/ 5 17) 8
+          (/ 10 51) 12
+          (/ 2 17) 20)))
     (t/testing "dice/posteriors-seq"
       (let [actual-seq (sut/posteriors-seq priors [6 6 8 7 7 5 4])]
         (t/is (= [6 {4 0 

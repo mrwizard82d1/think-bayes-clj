@@ -6,7 +6,8 @@
 (t/deftest monty-hall-suite-test
   (t/testing "monty-hall-suite/posteriors"
     (let [posteriors (sut/posteriors :b)]
-      (t/is (= (/ 1 3) (pmf/probability posteriors :a)))
-      (t/is (= 0 (pmf/probability posteriors :b)))
-      (t/is (= (/ 2 3) (pmf/probability posteriors :c))))))
+      (t/are [e h] (= e (pmf/probability posteriors h))
+        (/ 1 3) :a
+        0 :b
+        (/ 2 3) :c))))
   
