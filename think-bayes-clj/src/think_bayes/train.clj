@@ -6,6 +6,16 @@
   "Create a uniform prior probability distribution with hypotheses from `lower` up to and including `upper`."
   [lower upper]
   (suite/priors (range lower (inc upper))))
+
+(defn power-priors
+  "Create a prior probability distribution with `count` hypotheses distributed using a power law with 
+  option `alpha`."
+  ([count alpha] 
+   (let [hypotheses (range 1 (inc count))]
+     (reduce #(assoc %1 (first %2) (second %2)) 
+             {} 
+             (map vector hypotheses (map #(Math/pow % (- alpha)) hypotheses)))))
+  ([count] (power-priors count 1.0)))
   
 ;; This function is identical to `suite/likelihood` except we force our calculations to be `double` values.
 ;; 

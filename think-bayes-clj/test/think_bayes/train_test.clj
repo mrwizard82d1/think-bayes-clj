@@ -7,7 +7,7 @@
 
 (t/deftest train-uniform-prior-test
   (let [priors-1000 (sut/uniform-priors 1 1000)]
-    (t/testing "sut.priors"
+    (t/testing "sut.uniform_priors"
       (t/is (= (repeat 1000 (/ 1 1000))
                (map #(pmf/probability priors-1000 %) (keys priors-1000)))))
     (t/testing "sut.posteriors"
@@ -34,3 +34,24 @@
                 152 posteriors-seq-500
                 164 posteriors-seq-1000
                 171 posteriors-seq-2000))))))))
+
+(t/deftest train-power-priors-test
+  (let [priors-1000 (sut/power-priors 1000)]
+    (t/testing "sut/power-priors"
+      (t/are [h] (= (/ 1.0 h) (pmf/probability priors-1000 h))
+        1 
+        2
+        59
+        60
+        1000))
+    (let [priors-500 (sut/power-priors 500)
+          priors-2000 (sut/power-priors 2000)]
+      (t/testing "sut/mean of sut/posteriors-seq with multiple observations"
+        (let [data-seq [60 30 90]
+              posteriors-seq-1000 (suite/posteriors-seq priors-1000 data-seq sut/likelihood)
+              posteriors-seq-500 (suite/posteriors-seq priors-500 data-seq sut/likelihood)
+              posteriors-seq-2000 (suite/posteriors-seq priors-2000 data-seq sut/likelihood)]
+          (t/are [e p] (= e (int (Math/rint (pmf/mean (second (last p))))))
+            131 posteriors-seq-500
+            133 posteriors-seq-1000
+            134 posteriors-seq-2000))))))
