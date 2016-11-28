@@ -25,10 +25,25 @@
         (/ 2 15) :c-key)))
   (let [pmf-one-quantitative-key (sut/inc {} 44)
         pmf-many-quantitative-keys (-> {}
-                               (sut/set-probability 4 (/ 1 3))
-                               (sut/set-probability 9 (/ 1 3))
-                               (sut/set-probability 2 (/ 1 3))
-                               (sut/normalize))]
+                                       (sut/set-probability 4 (/ 1 3))
+                                       (sut/set-probability 9 (/ 1 3))
+                                       (sut/set-probability 2 (/ 1 3))
+                                       (sut/normalize))]
     (testing "Of `sut.mean`"
       (is (= 44 (sut/mean pmf-one-quantitative-key)))
-      (is (= 5 (sut/mean pmf-many-quantitative-keys))))))
+      (is (= 5 (sut/mean pmf-many-quantitative-keys)))))
+  
+  (let [dice-posteriors (-> {}
+                            (sut/set-probability 4 0)
+                            (sut/set-probability 6 (/ 20 51))
+                            (sut/set-probability 8 (/ 5 17))
+                            (sut/set-probability 12 (/ 10 51))
+                            (sut/set-probability 20 (/ 2 17)))]
+    (testing "sut/percentile, interval, and make-cdf" 
+      ;; The following value is the posterior distribution of the dice problem having observed 6.
+      (are [eh pct] (= eh (sut/percentile dice-posteriors pct))
+        4 0
+        6 39.2
+        8 68.6
+        12 88.2
+        20 100))))

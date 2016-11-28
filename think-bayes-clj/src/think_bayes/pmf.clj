@@ -35,3 +35,26 @@
   Remember that this function **assumes** all hypotheses are numbers."
   [pmf]
   (reduce #(+ %1 (* (first %2) (second %2))) 0 pmf))
+
+(defn sorted-probabilities [pmf]
+  (map #(vector %1 (probability pmf %1)) (sort (keys pmf))))
+
+(defn probabilities [hypothesis-probability-pairs]
+  (map second hypothesis-probability-pairs))
+
+(defn total-probability [hypothesis-probability-pairs]
+  (reduce + (probabilities hypothesis-probability-pairs)))
+
+(defn cdf-pairs [ordered-probabilities]
+  (reduce #(conj %1 [(first %2) (+ (second (last %1)) (second %2))]) 
+                          [(first ordered-probabilities)] 
+                          (rest ordered-probabilities)))
+
+(defn percentile
+  "Returns the hypothesis of `pmf` the sum of whose probabilities is greater than `percentage`."
+  [pmf percentage]
+  (let [percentile (/ percentage 100.)
+        ordered-probabilities (sorted-probabilities pmf)
+        cdf-pairs (cdf-pairs ordered-probabilities)]
+    (first (first (drop-while #(< (second %) percentile) cdf-pairs)))))
+

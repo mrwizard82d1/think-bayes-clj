@@ -54,4 +54,10 @@
           (t/are [e p] (= e (int (Math/rint (pmf/mean (second (last p))))))
             131 posteriors-seq-500
             133 posteriors-seq-1000
-            134 posteriors-seq-2000))))))
+            134 posteriors-seq-2000)
+          ;; "Think Bayes" reports this interval as (91, 243). When I look at details, I calculate
+          ;; the cumulative probability of 242 is 0.9492... but the cumulative probability of 243 is
+          ;; 0.9504. I do not know if this difference is a result of Java math, Python math, numpy,
+          ;; or my implementation. I'll investigate this issue a little but not much.
+          (t/is (= [91 242] [(pmf/percentile (second (last posteriors-seq-1000)) 5)
+                             (pmf/percentile (second (last posteriors-seq-1000)) 95)])))))))
