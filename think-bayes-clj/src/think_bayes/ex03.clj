@@ -32,8 +32,10 @@
   calculate the likelihood of seeing locomotive number `data`. Further, this function assumes that the 
   distribution of company sizes follows a power law."
   [hypotheses]
-  (fn [data hypothesis]
-    (/ data (count (filter #(<= data %) hypotheses)))))
+  (let [train-count (reduce + hypotheses)]
+    (fn [data hypothesis]
+      (let [companies-with-train-number (count (filter #(<= data %) hypotheses))]
+        (/ companies-with-train-number train-count)))))
   
 (def posteriors suite/posteriors)
 
