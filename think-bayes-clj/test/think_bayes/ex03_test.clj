@@ -25,6 +25,7 @@
       [1] [1] 1
       [(/ 3 4) (/ 3 4)] [1 1 2] 1
       [(/ 1 4) (/ 1 4)] [1 1 2] 2
+      [0 0] [1 1 2] 3
       [(/ 5 8) (/ 5 8) (/ 5 8)] [1 1 1 2 3] 1)
     (t/are [expecteds hypotheses] (= expecteds 
                                           (map #((ex03/generate-likelihood-function hypotheses) % nil) 
@@ -33,11 +34,11 @@
       [(/ 3 4) (/ 1 4)] [1 1 2]
       [(/ 5 8) (/ 2 8) (/ 1 8)] [1 1 1 2 3]
       [(/ 8 15) (/ 4 15) (/ 2 15) (/ 1 15)] [1 1 1 1 2 2 3 4]
-      (flatten [(/ 9 29) (/ 17 87) (/ 4 29) (/ 3 29) (/ 7 87) (/ 5 87) (/ 4 87) (/ 1 29) (/ 2 87) (/ 1 87)])
+      [(/ 9 29) (/ 17 87) (/ 4 29) (/ 3 29) (/ 7 87) (/ 5 87) (/ 4 87) (/ 1 29) (/ 2 87) (/ 1 87)]
       [1 1 1 1 1 1 1 1 1 1 2 2 2 2 2 3 3 3 4 4 5 5 6 7 8 9 10]))
-  #_(t/testing "Single company"
-    (let [hypotheses (map #(vector 1 %) (range 1 101))
+  (t/testing "Single company"
+    (let [hypotheses (ex03/zipf-hypotheses 100)
           priors (ex03/priors hypotheses)
-          _ (println priors)
-          posteriors-60 (ex03/posteriors priors 60)]
-      (t/is (= (repeat 59 0) (map pmf/probability (range 1 60)))))))
+          likelihood-f (ex03/generate-likelihood-function hypotheses)
+          posteriors-60 (ex03/posteriors priors 60 likelihood-f)]
+      (t/is (= (repeat 59 0) (map #(pmf/probability posteriors-60 %) (range 1 60)))))))
