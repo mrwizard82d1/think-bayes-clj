@@ -34,8 +34,10 @@
   [hypotheses]
   (let [train-count (reduce + hypotheses)]
     (fn [data hypothesis]
-      (let [companies-with-train-number (count (filter #(<= data %) hypotheses))]
-        (/ companies-with-train-number train-count)))))
+      (if (> data hypothesis
+        0
+        (let [companies-with-train-number (count (filter #(<= data %) hypotheses))]
+          (/ companies-with-train-number train-count))))))
   
 (def posteriors suite/posteriors)
 
