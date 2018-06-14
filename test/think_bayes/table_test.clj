@@ -2,7 +2,7 @@
   (:require [midje.sweet :refer :all]
             [think-bayes.table :as tbt]))
 
-(facts "M&M problem"
-  (fact "Bayes' table method"
+(facts "Bayes' table method"
+  (fact "M&M problem' table method"
     (tbt/mnm-posteriors [:yellow :green]) => {:mnm-mix-1994 (/ 20 27)
                                               :mnm-mix-1996 (/ 7 27)}))
