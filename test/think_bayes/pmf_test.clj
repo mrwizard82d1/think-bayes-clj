@@ -32,4 +32,12 @@
                               "over" (/ 1 10)
                               "lazy" (/ 1 10)
                               "grey" (/ 1 10)
-                              "lambs" (/ 1 10)})))
+                              "lambs" (/ 1 10)}))
+  (fact "Return the probability of a value."
+    (let [pmf (pmf/set-probabilities {} 
+                                     (zipmap (range 1 5) (map #(/ % 10) (range 1 5))))]
+      (pmf/probability pmf 1) => (/ 1 10)
+      (pmf/probability pmf 2) => (/ 1 5)
+      (pmf/probability pmf 3) => (/ 3 10)
+      (pmf/probability pmf 4) => (/ 2 5))))
+
