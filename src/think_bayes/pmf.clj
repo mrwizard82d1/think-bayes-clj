@@ -23,3 +23,7 @@
 (defn probability [pmf value]
   "Return the probability of value."
   (pmf value))
+
+(defn multiply [pmf value factor]
+  "Multiply the probability mass of `value` by `factor`."
+  (set-probability pmf value (* (probability pmf value) factor)))

@@ -39,5 +39,11 @@
       (pmf/probability pmf 1) => (/ 1 10)
       (pmf/probability pmf 2) => (/ 1 5)
       (pmf/probability pmf 3) => (/ 3 10)
-      (pmf/probability pmf 4) => (/ 2 5))))
-
+      (pmf/probability pmf 4) => (/ 2 5)))
+  (fact "Multiply the probability mass by factor."
+    (let [before-multiplication (-> {} 
+                                    (pmf/set-probability :a (/ 1 4))
+                                    (pmf/set-probability :b (/ 3 4)))
+          pmf (pmf/multiply before-multiplication :a (/ 1 2))]
+      (pmf/probability pmf :a) => (/ 1 8)
+      (pmf/probability pmf :b) => (/ 3 4))))
