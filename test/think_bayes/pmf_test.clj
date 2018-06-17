@@ -23,16 +23,16 @@
           pmf (->> word-list
                   (map cstr/lower-case)
                   (reduce pmf/increase {}))]
-      (pmf/normalize pmf) => {"the" (/ 2 10)
-                              "quick" (/ 1 10)
-                              "little" (/ 1 10)
-                              "brown" (/ 1 10)
-                              "fox" (/ 1 10)
-                              "jumped" (/ 1 10)
-                              "over" (/ 1 10)
-                              "lazy" (/ 1 10)
-                              "grey" (/ 1 10)
-                              "lambs" (/ 1 10)}))
+      (pmf/normalize pmf) => {"the" (/ 2 11)
+                              "quick" (/ 1 11)
+                              "little" (/ 1 11)
+                              "brown" (/ 1 11)
+                              "fox" (/ 1 11)
+                              "jumped" (/ 1 11)
+                              "over" (/ 1 11)
+                              "lazy" (/ 1 11)
+                              "grey" (/ 1 11)
+                              "lambs" (/ 1 11)}))
   (fact "Return the probability of a value."
     (let [pmf (pmf/set-probabilities {} 
                                      (zipmap (range 1 5) (map #(/ % 10) (range 1 5))))]
@@ -46,4 +46,14 @@
                                     (pmf/set-probability :b (/ 3 4)))
           pmf (pmf/multiply before-multiplication :a (/ 1 2))]
       (pmf/probability pmf :a) => (/ 1 8)
-      (pmf/probability pmf :b) => (/ 3 4))))
+      (pmf/probability pmf :b) => (/ 3 4)))
+  (fact "The cookie problem solved manually using PMFs."
+    (let [priors (-> {}
+                     (pmf/set-probability :bowl-1 (/ 1 2))
+                     (pmf/set-probability :bowl-2 (/ 1 2)))
+          products (-> priors
+                       (pmf/multiply :bowl-1 (/ 30 40))
+                       (pmf/multiply :bowl-2 (/ 20 40)))
+          posteriors (pmf/normalize products)]
+      (pmf/probability posteriors :bowl-1) => (/ 3 5)
+      (pmf/probability posteriors :bowl-2) => (/ 2 5))))
