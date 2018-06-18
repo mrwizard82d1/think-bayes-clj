@@ -27,3 +27,17 @@
 (defn multiply [pmf value factor]
   "Multiply the probability mass of `value` by `factor`."
   (set-probability pmf value (* (probability pmf value) factor)))
+
+(defn suite [hypotheses]
+  "Construct a suite: a PMF with equal probabilities for each hypothesis in `hypotheses`."
+  (normalize (reduce #(increase %1 %2) {} hypotheses)))
+
+(defn posteriors [priors likelihood datum]
+  "Calculate the posteriors after seeing `datum`."
+  (let [hypotheses (keys priors)
+        products (reduce #(set-probability %1 %2 (* (priors %2) 
+                                                    (likelihood datum %2)))
+                         {}
+                         hypotheses)
+        posteriors (normalize products)]
+    posteriors))
