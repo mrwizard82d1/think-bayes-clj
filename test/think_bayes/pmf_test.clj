@@ -47,6 +47,30 @@
           pmf (pmf/multiply before-multiplication :a (/ 1 2))]
       (pmf/probability pmf :a) => (/ 1 8)
       (pmf/probability pmf :b) => (/ 3 4)))
+  (fact "Initialize a suite of probablities"
+    ((pmf/suite [:a :b]) :a) => (/ 1 2)
+    ((pmf/suite (range 5)) 4) => (/ 1 5))
+  (fact "Calculate the posteriors given some data."
+    (let [priors (pmf/suite (range 0 (inc 10)))
+          likelihood (fn [data hypothesis]
+                       (if (= data :vanilla)
+                         (/ hypothesis (count priors))
+                         (- 1 (/ hypothesis (count priors)))))
+          posteriors (pmf/posteriors priors likelihood :vanilla)]
+      (pmf/probability posteriors 0) => 0
+      (pmf/probability posteriors 1) => (/ 1 55)
+      (pmf/probability posteriors 2) => (/ 2 55)
+      (pmf/probability posteriors 3) => (/ 3 55)
+      (pmf/probability posteriors 4) => (/ 4 55)
+      (pmf/probability posteriors 5) => (/ 5 55)
+      (pmf/probability posteriors 6) => (/ 6 55)
+      (pmf/probability posteriors 7) => (/ 7 55)
+      (pmf/probability posteriors 8) => (/ 8 55)
+      (pmf/probability posteriors 9) => (/ 9 55)
+      (pmf/probability posteriors 10) => (/ 10 55)
+      )))
+
+(facts "Solving the cookie problems using PMFs."
   (fact "The cookie problem solved manually using PMFs."
     (let [priors (-> {}
                      (pmf/set-probability :bowl-1 (/ 1 2))
@@ -55,5 +79,16 @@
                        (pmf/multiply :bowl-1 (/ 30 40))
                        (pmf/multiply :bowl-2 (/ 20 40)))
           posteriors (pmf/normalize products)]
+      (pmf/probability posteriors :bowl-1) => (/ 3 5)
+      (pmf/probability posteriors :bowl-2) => (/ 2 5)))
+  (fact "The cookie problem solved using pmf functions."
+    (let [priors (pmf/suite [:bowl-1 :bowl-2])
+          mixes {:bowl-1 {:vanilla (/ 30 40)
+                          :chocolate (/ 10 40)}
+                 :bowl-2 {:vanilla (/ 20 40)
+                          :chocolate (/ 20 40)}}
+          likelihood (fn [data hypothesis]
+                       (get-in mixes [hypothesis data]))
+          posteriors (pmf/posteriors priors likelihood :vanilla)]
       (pmf/probability posteriors :bowl-1) => (/ 3 5)
       (pmf/probability posteriors :bowl-2) => (/ 2 5))))
