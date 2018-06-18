@@ -92,3 +92,16 @@
           posteriors (pmf/posteriors priors likelihood :vanilla)]
       (pmf/probability posteriors :bowl-1) => (/ 3 5)
       (pmf/probability posteriors :bowl-2) => (/ 2 5))))
+
+(facts "Solving the Monty Hall problem using PMFs"
+  (fact "Probability of doors A, B and C given contestant picks A and Monty picks B."
+    (let [priors (pmf/suite [:a :b :c])
+          likelihood (fn [data hypothesis]
+                       (cond 
+                         (= data hypothesis) 0
+                         (= hypothesis :a) (/ 1 2)
+                         true 1))
+          posteriors (pmf/posteriors priors likelihood :b)]
+      (pmf/probability posteriors :a) => (/ 1 3)
+      (pmf/probability posteriors :b) => 0
+      (pmf/probability posteriors :c) => (/ 2 3))))
