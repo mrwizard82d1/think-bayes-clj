@@ -32,6 +32,9 @@
   "Construct a suite: a PMF with equal probabilities for each hypothesis in `hypotheses`."
   (normalize (reduce #(increase %1 %2) {} hypotheses)))
 
+;; (defn update-pmf [pmf hypotheses priors likelihood datum]
+;;   (reduce #(set-probability pmf % (* (priors %) (likelihood datum %))) {} hypotheses))
+
 (defn posteriors [priors likelihood datum]
   "Calculate the posteriors after seeing `datum`."
   (let [hypotheses (keys priors)
@@ -39,5 +42,6 @@
                                                     (likelihood datum %2)))
                          {}
                          hypotheses)
+        ;; products (update-pmf {} hypotheses priors likelihood datum)
         posteriors (normalize products)]
     posteriors))

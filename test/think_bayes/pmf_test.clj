@@ -93,7 +93,7 @@
       (pmf/probability posteriors :bowl-1) => (/ 3 5)
       (pmf/probability posteriors :bowl-2) => (/ 2 5))))
 
-(facts "Solving the Monty Hall problem using PMFs"
+(facts "Solving the Monty Hall problem using suite and posteriors"
   (fact "Probability of doors A, B and C given contestant picks A and Monty picks B."
     (let [priors (pmf/suite [:a :b :c])
           likelihood (fn [data hypothesis]
@@ -105,3 +105,32 @@
       (pmf/probability posteriors :a) => (/ 1 3)
       (pmf/probability posteriors :b) => 0
       (pmf/probability posteriors :c) => (/ 2 3))))
+
+(facts :mnms "Solving the M&M problems using suite and posteriors"
+  (fact "Probability of 1994 and 1996 given yellow and green"
+    (let [mix-1994 {:brown 30
+                    :yellow 20
+                    :red 20
+                    :green 10
+                    :orange 10
+                    :tan 10}
+          mix-1996 {:blue 24
+                    :green 20
+                    :orange 16
+                    :yellow 14
+                    :red 13
+                    :brown 13}
+          hypothesis-a {:bag-1 mix-1994,
+                        :bag-2 mix-1996}
+          hypothesis-b {:bag-1 mix-1996,
+                        :bag-2 mix-1994}
+          hypotheses {:a hypothesis-a :b hypothesis-b}
+          priors (pmf/suite (keys hypotheses))
+          likelihood (fn [[bag color] hypothesis]
+                       (let [likelihood (get-in hypotheses [hypothesis bag color])]
+                         likelihood))
+          posteriors-after-bag1-yellow (pmf/posteriors priors likelihood [:bag-1 :yellow])
+          posteriors (pmf/posteriors posteriors-after-bag1-yellow likelihood 
+                                     [:bag-2 :green])]
+      (pmf/probability posteriors :a) => (/ 20 27)
+      (pmf/probability posteriors :b) => (/ 7 27))))
