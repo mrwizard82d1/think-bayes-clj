@@ -127,10 +127,9 @@
           hypotheses {:a hypothesis-a :b hypothesis-b}
           priors (pmf/suite (keys hypotheses))
           likelihood (fn [[bag color] hypothesis]
-                       (let [likelihood (get-in hypotheses [hypothesis bag color])]
-                         likelihood))
-          posteriors-after-bag1-yellow (pmf/posteriors priors likelihood [:bag-1 :yellow])
-          posteriors (pmf/posteriors posteriors-after-bag1-yellow likelihood 
-                                     [:bag-2 :green])]
+                       (get-in hypotheses [hypothesis bag color]))
+          posteriors (-> priors
+                         (pmf/posteriors likelihood [:bag-1 :yellow])
+                         (pmf/posteriors likelihood [:bag-2 :green]))]
       (pmf/probability posteriors :a) => (/ 20 27)
       (pmf/probability posteriors :b) => (/ 7 27))))
