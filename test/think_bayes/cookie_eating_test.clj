@@ -35,5 +35,14 @@
                                                 likelihood-post-vanilla
                                                 :vanilla)]
                  (pmf/probability posteriors :bowl-1) => (/ 29 42)
-                 (pmf/probability posteriors :bowl-2) => (/ 13 42)))))
+                 (pmf/probability posteriors :bowl-2) => (/ 13 42)))
+         (fact "Draw vanilla from bowl-1 followed by one chocolate."
+               (let [likelihood-post-vanilla
+                     (make-likelihood eat-vanilla-bowl-1-mixes)
+                     posteriors (pmf/posteriors posteriors-vanilla-bowl-1
+                                                 likelihood-post-vanilla
+                                                 :chocolate)]
+                 (pmf/probability posteriors :bowl-1) => (/ 10 23)
+                 (pmf/probability posteriors :bowl-2) => (/ 13 23)))))
+
 
