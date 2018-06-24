@@ -17,7 +17,7 @@
    (assoc pmf value (+ (get pmf value 0) by))))
 
 (defn normalize [pmf]
-  "Normalize this pmf into a probablity density function."
+  "Normalize this pmf into a probability density function."
   (reduce (fn [m [k v]] (assoc m k (/ v (reduce + (vals pmf))))) {} pmf))
 
 (defn probability [pmf value]

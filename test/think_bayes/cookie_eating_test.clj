@@ -32,7 +32,7 @@
                    likelihood-post-vanilla (make-likelihood eat-vanilla-bowl-1-mixes)
                    posteriors
                    (pmf/posteriors posteriors-vanilla-bowl-1
-                                   (make-likelihood eat-vanilla-bowl-1-mixes)
+                                   likelihood-post-vanilla
                                    :vanilla)]
                (pmf/probability posteriors :bowl-1) => (/ 29 42)
                (pmf/probability posteriors :bowl-2) => (/ 13 42))))
