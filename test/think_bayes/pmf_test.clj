@@ -67,8 +67,8 @@
       (pmf/probability posteriors 7) => (/ 7 55)
       (pmf/probability posteriors 8) => (/ 8 55)
       (pmf/probability posteriors 9) => (/ 9 55)
-      (pmf/probability posteriors 10) => (/ 10 55)
-      )))
+      (pmf/probability posteriors 10) => (/ 10 55))))
+
 
 (facts "Solving the cookie problems using PMFs."
   (fact "The cookie problem solved manually using PMFs."

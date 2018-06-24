@@ -35,7 +35,7 @@
 (defn posteriors [priors likelihood datum]
   "Calculate the posteriors after seeing `datum`."
   (let [hypotheses (keys priors)
-        products (reduce #(set-probability %1 %2 (* (priors %2) 
+        products (reduce #(set-probability %1 %2 (* (priors %2)
                                                     (likelihood datum %2)))
                          {}
                          hypotheses)
